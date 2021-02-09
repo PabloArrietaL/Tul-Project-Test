@@ -1,0 +1,10 @@
+<div class="container d-flex align-items-center">
+  <div class="row w-100">
+    <div class="col-12 col-sm-12 col-md-6 login">
+      <app-sign-in (emitLogin)="login($event)"></app-sign-in>
+    </div>
+    <div class="col-12 col-sm-12 col-md-6 register">
+      <app-sign-up (emitRegister)="register($event)"></app-sign-up>
+    </div>
+  </div>
+</div>

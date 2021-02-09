@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -14,7 +14,17 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
     "target": "es2015",
+    "paths": {
+      "@Smarts/*" : ["app/components/smarts/*"],
+      "@Dummies/*" : ["app/components/dummies/*"],
+      "@Modules/*" : ["app/modules/*"],
+      "@Utils/*" : ["app/utils/*"],
+      "@services/*" : ["app/services/*"],
+      "@env/*": ["environments/*"],
+      "@Core/*": ["app/core/*"]
+    },
     "module": "es2020",
     "lib": [
       "es2018",

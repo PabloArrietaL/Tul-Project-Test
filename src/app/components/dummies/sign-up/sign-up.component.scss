@@ -1,0 +1,23 @@
+h3 {
+  text-align: center;
+  color: #fff;
+}
+
+form {
+  padding: 10%;
+}
+
+button {
+  width: 50%;
+  border-radius: 1rem;
+  padding: 1.5%;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: #0062cc;
+  background-color: #fff;
+}
+
+button:disabled {
+  cursor: no-drop;
+}

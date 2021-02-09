@@ -1,0 +1,13 @@
+<section class="py-5">
+  <header class="text-center">
+    <p class="small text-muted small text-uppercase mb-1">
+      Select your products
+    </p>
+    <h2 class="h5 text-uppercase mb-4">Top products</h2>
+  </header>
+  <div class="row">
+    <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let pr of products">
+      <app-product-card [product]="pr"></app-product-card>
+    </div>
+  </div>
+</section>

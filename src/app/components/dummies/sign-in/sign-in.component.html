@@ -1,0 +1,22 @@
+<h3>Login</h3>
+<form [formGroup]="form" autocomplete="off">
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Email"
+      formControlName="email"
+    />
+  </div>
+  <div class="form-group">
+    <input
+      type="password"
+      class="form-control"
+      placeholder="Password"
+      formControlName="password"
+    />
+  </div>
+  <div class="form-group">
+    <button [disabled]="form.invalid" (click)="login()">Sign in</button>
+  </div>
+</form>
