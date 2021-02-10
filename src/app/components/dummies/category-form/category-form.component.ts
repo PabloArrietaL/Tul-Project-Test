@@ -3,27 +3,46 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CategoryForm } from '@Utils/form/category.form';
-import { Category } from '@Utils/types/category.type';
+import { CategoryFile } from '@Utils/types/category.type';
 
 @Component({
   selector: 'app-category-form',
   templateUrl: './category-form.component.html',
   styleUrls: ['./category-form.component.scss'],
 })
-export class CategoryFormComponent implements OnInit {
+export class CategoryFormComponent implements OnChanges {
   @Input() isEdit = false;
-  @Output() emitForm = new EventEmitter<Category>();
-  public form: FormGroup = CategoryForm.initForm();
-  public files: File[] = [];
+  @Output() emitForm = new EventEmitter<CategoryFile>();
+  @Input() form!: FormGroup;
+  @Input() files!: File[];
+  public loading: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes.files?.currentValue?.length == 0 &&
+      changes.files?.previousValue?.length > 0
+    ) {
+      this.loading = false;
+    }
+
+    if (!changes.isEdit.currentValue) {
+      this.loading = false;
+      this.cdr.detectChanges();
+    }
+  }
+
+  closeModal() {
+    this.isEdit = false;
+    this.form.reset();
+  }
 
   onSelect(event: any): void {
     let reader = new FileReader();
@@ -47,7 +66,8 @@ export class CategoryFormComponent implements OnInit {
 
   emitValidation(): void {
     if (this.form.valid) {
-      this.emitForm.emit(this.form.value);
+      this.loading = true;
+      this.emitForm.emit({ ...this.form.value, file: this.files[0] });
     }
   }
 }

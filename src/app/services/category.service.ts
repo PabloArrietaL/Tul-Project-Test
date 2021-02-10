@@ -13,30 +13,39 @@ export class CategoryService {
     private storage: AngularFireStorage
   ) {}
 
-  public create(data: Category) {
-    const ref = this.storage.ref(data.image.split(',')[1]);
-    return ref.getDownloadURL().pipe(
-      switchMap((url) => {
-        console.log(url);
-
-        data.image = url;
-        return from(this.firestore.collection('categories').add(data));
+  public create(data: Category, file: File) {
+    const timestamp = new Date().getTime();
+    const name = timestamp + file.name;
+    return from(this.storage.upload(name, file)).pipe(
+      switchMap(() => {
+        const ref = this.storage.ref(name);
+        return ref.getDownloadURL().pipe(
+          switchMap((url) => {
+            data.image.url = url;
+            return from(this.firestore.collection('categories').add(data));
+          })
+        );
       })
     );
   }
 
-  public getById(documentId: string) {
-    return this.firestore
-      .collection('categories')
-      .doc(documentId)
-      .snapshotChanges();
+  public delete(item: Category) {
+    return from(
+      this.firestore.collection('categories').doc(item.id).delete()
+    ).pipe(
+      switchMap(() => {
+        return this.storage.refFromURL(item.image.url).delete();
+      })
+    );
   }
 
   public get() {
     return this.firestore.collection('categories').snapshotChanges();
   }
 
-  public update(documentId: string, data: any) {
-    return this.firestore.collection('categories').doc(documentId).set(data);
+  public update(documentId: string, data: Category) {
+    return from(
+      this.firestore.collection('categories').doc(documentId).set(data)
+    );
   }
 }

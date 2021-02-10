@@ -1,14 +1,13 @@
 <div class="modal-dialog modal-dialog-centered" role="document">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">
-        {{ isEdit ? "Edit" : "Create" }} category
-      </h5>
+      <h5 class="modal-title">{{ isEdit ? "Edit" : "Create" }} category</h5>
       <button
         type="button"
         class="close"
         data-dismiss="modal"
         aria-label="Close"
+        (click)="closeModal()"
       >
         <span aria-hidden="true">&times;</span>
       </button>
@@ -23,7 +22,10 @@
             formControlName="name"
           />
         </div>
-        <div class="form-group">
+        <div class="form-group d-flex justify-content-center" *ngIf="isEdit">
+          <img [src]="form.value.image" width="250" />
+        </div>
+        <div class="form-group" *ngIf="!isEdit">
           <ngx-dropzone
             (change)="onSelect($event)"
             [multiple]="false"
@@ -43,15 +45,27 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-dismiss="modal"
+        (click)="closeModal()"
+      >
         Close
       </button>
       <button
         type="button"
-        class="btn btn-primary"
-        [disabled]="form.invalid"
+        class="btn btn-primary d-flex justify-content-center align-items-center"
+        [disabled]="form.invalid || loading"
         (click)="emitValidation()"
       >
+        <div
+          class="spinner-border spinner-border-sm mr-2"
+          role="status"
+          *ngIf="!isEdit && loading"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
         Save
       </button>
     </div>
