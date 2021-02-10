@@ -1,11 +1,11 @@
 <header class="header">
   <div class="container px-0 px-lg-3">
     <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0">
-      <a class="navbar-brand"
-        ><span class="font-weight-bold text-uppercase text-dark"
-          >Tül Project</span
-        ></a
-      >
+      <a class="navbar-brand" routerLink="/home">
+        <span class="font-weight-bold text-uppercase text-dark">
+          Tül Project
+        </span>
+      </a>
       <button
         class="navbar-toggler navbar-toggler-right"
         type="button"
@@ -17,13 +17,23 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link">Home</a>
+            <a class="nav-link" routerLink="/home" routerLinkActive="active">
+              Home
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">Products</a>
+            <a class="nav-link" routerLink="/product" routerLinkActive="active">
+              Products
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">Categories</a>
+            <a
+              class="nav-link"
+              routerLink="/category"
+              routerLinkActive="active"
+            >
+              Categories
+            </a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">

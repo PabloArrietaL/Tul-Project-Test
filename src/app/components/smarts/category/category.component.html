@@ -1,1 +1,57 @@
-<p>category works!</p>
+<section class="py-5">
+  <header class="text-center">
+    <p class="small text-muted small text-uppercase mb-1">Category list</p>
+    <h2 class="h5 text-uppercase mb-4">Create, update and delete categories</h2>
+  </header>
+  <div class="row mt-5">
+    <div class="table-header">
+      <div class="pl-2">
+        <button
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#formModal"
+        >
+          Create
+        </button>
+      </div>
+      <div class="pr-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="What you looking for?"
+        />
+      </div>
+    </div>
+    <table class="table table-hover table-bordered pl-2 pr-2">
+      <thead>
+        <tr>
+          <th width="1.2rem">#</th>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of pageOfItems; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ item.name }}</td>
+          <td>{{ item.image }}</td>
+          <td>{{ item.name }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="w-100">
+      <app-pagination
+        [items]="items"
+        (changePage)="onChangePage($event)"
+      ></app-pagination>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="formModal">
+  <app-category-form
+    [isEdit]="isEdit"
+    (emitForm)="sendToFirebase($event)"
+  ></app-category-form>
+</div>
