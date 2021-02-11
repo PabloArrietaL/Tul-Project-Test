@@ -1,13 +1,52 @@
-<section class="py-5">
-  <header class="text-center">
-    <p class="small text-muted small text-uppercase mb-1">
-      Select your products
-    </p>
-    <h2 class="h5 text-uppercase mb-4">Top products</h2>
-  </header>
-  <div class="row">
-    <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let pr of products">
-      <app-product-card [product]="pr"></app-product-card>
+<section class="mt-3 py-5">
+  <div class="container p-0">
+    <div class="row">
+      <div class="col-lg-3 order-2 order-lg-1">
+        <h5 class="text-uppercase mb-4">Categories</h5>
+        <ul class="list-unstyled text-muted pl-lg-2 font-weight-normal">
+          <li class="mb-2">
+            <a class="reset-anchor" (click)="setFilter('', '')"
+              >All categories</a
+            >
+          </li>
+          <li class="mb-2" *ngFor="let item of category$ | async">
+            <a
+              class="reset-anchor"
+              (click)="setFilter(item.id || '', item.name)"
+              >{{ item.name }}</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-9 order-1 order-lg-2 mb-5 mb-lg-0">
+        <div class="row mb-3 align-items-center">
+          <div class="col-lg-6 mb-2 mb-lg-0">
+            <p class="text-small text-muted mb-0">
+              Showing {{ productsFiltered.length }} results
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <div
+              class="list-inline d-flex align-items-center justify-content-lg-end mb-0"
+            >
+              <h6
+                class="badge badge-primary d-flex align-items-center justify-content-center"
+                *ngIf="category !== ''"
+              >
+                {{ category }}
+                <button class="close pb-1 ml-1" (click)="setFilter('', '')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-sm-6" *ngFor="let pr of productsFiltered">
+            <app-product-card [product]="pr"></app-product-card>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
