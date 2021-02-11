@@ -43,7 +43,10 @@
         </div>
         <div class="row">
           <div class="col-lg-4 col-sm-6" *ngFor="let pr of productsFiltered">
-            <app-product-card [product]="pr"></app-product-card>
+            <app-product-card
+              [product]="pr"
+              (addToCart)="addToCart($event)"
+            ></app-product-card>
           </div>
         </div>
       </div>

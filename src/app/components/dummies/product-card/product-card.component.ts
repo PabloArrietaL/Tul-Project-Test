@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductDetailComponent } from '@Dummies/product-detail/product-detail.component';
 import { Product } from '@Utils/types/product.type';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -10,11 +10,12 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 })
 export class ProductCardComponent {
   @Input() product!: Product;
+  @Output() addToCart: EventEmitter<Product> = new EventEmitter<Product>();
   public modalRef!: BsModalRef;
 
   constructor(private modalService: BsModalService) {}
 
-  openDetail() {
+  openDetail(): void {
     const initialState = {
       product: this.product,
     };
@@ -22,5 +23,9 @@ export class ProductCardComponent {
       class: 'modal-dialog-centered modal-lg',
       initialState,
     });
+  }
+
+  emitProduct(): void {
+    this.addToCart.emit(this.product);
   }
 }

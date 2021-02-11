@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CartProvider } from '@Core/providers/cart.provider';
+import { ToastClass } from '@Utils/class/toast.class';
 import { Product, ProductDetail } from '@Utils/types/product.type';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -10,7 +12,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 export class ProductDetailComponent implements OnInit {
   public product!: Product;
   public detail!: ProductDetail;
-  constructor(public modalRef: BsModalRef) {}
+  constructor(public modalRef: BsModalRef, private cart: CartProvider) {}
 
   ngOnInit(): void {
     this.detail = {
@@ -24,5 +26,11 @@ export class ProductDetailComponent implements OnInit {
     else {
       this.detail.quantity === 1 ? 1 : this.detail.quantity--;
     }
+  }
+
+  addToCart() {
+    this.cart.setCartSessionBs(this.detail);
+    ToastClass.successToast('Product Added to cart');
+    this.modalRef.hide();
   }
 }

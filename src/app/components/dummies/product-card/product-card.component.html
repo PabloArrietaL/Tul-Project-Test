@@ -5,7 +5,7 @@
       <img class="img-fluid w-100" [src]="product.image.url" />
     </a>
     <div class="product-overlay">
-      <a class="btn btn-sm btn-dark">Add to cart</a>
+      <a class="btn btn-sm btn-dark" (click)="emitProduct()">Add to cart</a>
     </div>
   </div>
   <h6 class="mb-0 pb-0">

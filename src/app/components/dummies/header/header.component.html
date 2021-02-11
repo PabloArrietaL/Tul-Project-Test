@@ -40,7 +40,9 @@
           <li class="nav-item">
             <a class="nav-link" href="cart.html">
               <i class="fas fa-dolly-flatbed mr-1 text-gray"> </i>Cart
-              <small class="text-gray">(2)</small>
+              <small class="text-gray">{{
+                quantity > 0 ? "(" + quantity + ")" : ""
+              }}</small>
             </a>
           </li>
           <li class="nav-item">
