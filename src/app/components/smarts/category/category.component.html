@@ -6,13 +6,7 @@
   <div class="row mt-5">
     <div class="table-header">
       <div class="pl-2">
-        <button
-          class="btn btn-primary"
-          data-toggle="modal"
-          data-target="#formModal"
-        >
-          Create
-        </button>
+        <button class="btn btn-primary" (click)="openCreate()">Create</button>
       </div>
       <div class="pr-2">
         <input
@@ -43,12 +37,7 @@
               <a class="btn btn-danger mr-2" (click)="delete(item)">
                 <i class="fas fa-trash-alt"></i>
               </a>
-              <a
-                class="btn btn-info"
-                (click)="openEdit(item)"
-                data-toggle="modal"
-                data-target="#formModal"
-              >
+              <a class="btn btn-info" (click)="openEdit(item)">
                 <i class="fas fa-edit"></i>
               </a>
             </div>
@@ -74,12 +63,3 @@
     </div>
   </div>
 </section>
-
-<div class="modal fade" id="formModal">
-  <app-category-form
-    [isEdit]="isEdit"
-    [form]="form"
-    [files]="files"
-    (emitForm)="sendToFirebase($event)"
-  ></app-category-form>
-</div>

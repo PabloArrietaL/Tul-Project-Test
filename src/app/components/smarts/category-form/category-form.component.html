@@ -1,0 +1,59 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ isEdit ? "Edit" : "Create" }} category</h5>
+  <button type="button" class="close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form" autocomplete="off">
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Name"
+        formControlName="name"
+      />
+    </div>
+    <div class="form-group d-flex justify-content-center" *ngIf="isEdit">
+      <img [src]="form.value.image" width="250" />
+    </div>
+    <div class="form-group" *ngIf="!isEdit">
+      <ngx-dropzone
+        (change)="onSelect($event)"
+        [multiple]="false"
+        accept="image/jpeg,image/jpg,image/png"
+      >
+        <ngx-dropzone-label>Drop category image</ngx-dropzone-label>
+        <ngx-dropzone-image-preview
+          [removable]="true"
+          (removed)="onRemove(f)"
+          ngProjectAs="ngx-dropzone-preview"
+          *ngFor="let f of files"
+          [file]="f"
+        >
+        </ngx-dropzone-image-preview>
+      </ngx-dropzone>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    data-dismiss="modal"
+    (click)="modalRef.hide()"
+  >
+    Close
+  </button>
+  <button
+    type="button"
+    (click)="validation()"
+    class="btn btn-primary d-flex justify-content-center align-items-center"
+    [disabled]="form.invalid || loading"
+  >
+    <div class="spinner-border spinner-border-sm mr-2" *ngIf="loading">
+      <span class="sr-only">Loading...</span>
+    </div>
+    {{ isEdit ? "Edit" : "Save" }}
+  </button>
+</div>

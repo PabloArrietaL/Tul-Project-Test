@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { CategoryFormComponent } from '@Smarts/category-form/category-form.component';
 import { CategoryService } from '@services/category.service';
 import { ToastClass } from '@Utils/class/toast.class';
 import { CategoryForm } from '@Utils/form/category.form';
-import { Category, CategoryFile } from '@Utils/types/category.type';
-import { Image } from '@Utils/types/image.type';
+import { Category } from '@Utils/types/category.type';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-category',
@@ -15,11 +16,12 @@ export class CategoryComponent implements OnInit {
   public isEdit = false;
   public pageOfItems: Category[] = [];
   public items: Category[] = [];
-  public form: FormGroup = CategoryForm.initForm();
-  public files: File[] = [];
-  public editItem!: Category | null;
+  public modalRef!: BsModalRef;
 
-  constructor(private service: CategoryService) {}
+  constructor(
+    private service: CategoryService,
+    private modalService: BsModalService
+  ) {}
 
   ngOnInit(): void {
     this.service.get().subscribe((data) => {
@@ -34,7 +36,7 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  onChangePage(pageOfItems: Array<any>) {
+  onChangePage(pageOfItems: Array<Category>) {
     this.pageOfItems = pageOfItems;
   }
 
@@ -50,55 +52,31 @@ export class CategoryComponent implements OnInit {
   }
 
   openEdit(item: Category) {
-    this.isEdit = true;
-    this.editItem = item;
-    this.form.patchValue({
+    const form: FormGroup = CategoryForm.initForm();
+    form.patchValue({
       name: item.name,
       image: item.image.url,
     });
-  }
-
-  sendToFirebase(categoryFile: CategoryFile): void {
-    const file = categoryFile.file;
-    const category = {
-      name: categoryFile.name,
-      image: this.isEdit
-        ? (this.editItem?.image as Image)
-        : { name: file.name, url: '' },
+    const initialState = {
+      form,
+      isEdit: true,
+      editItem: item,
     };
-
-    if (this.isEdit) {
-      this.edit(category);
-    } else {
-      this.create(category, file);
-    }
+    this.modalService.show(CategoryFormComponent, {
+      class: 'modal-dialog-centered',
+      initialState,
+    });
   }
 
-  create(category: Category, file: File): void {
-    this.service.create(category, file).subscribe(
-      () => {
-        ToastClass.successToast('Category created successfully');
-        this.files = [];
-        this.form.reset();
-      },
-      (error) => {
-        ToastClass.errorToast(error.message);
-      }
-    );
-  }
-
-  edit(category: Category) {
-    category.image = this.editItem?.image as Image;
-    this.service.update(this.editItem?.id as string, category).subscribe(
-      () => {
-        ToastClass.successToast('Category edited successfully');
-        this.isEdit = false;
-        this.editItem = null;
-        this.form.reset();
-      },
-      (error) => {
-        ToastClass.errorToast(error.message);
-      }
-    );
+  openCreate() {
+    const form: FormGroup = CategoryForm.initForm();
+    const initialState = {
+      form,
+      isEdit: false,
+    };
+    this.modalService.show(CategoryFormComponent, {
+      class: 'modal-dialog-centered',
+      initialState,
+    });
   }
 }

@@ -5,9 +5,3 @@ export interface Category {
   name: string;
   image: Image;
 }
-
-export interface CategoryFile {
-  name: string;
-  image: string;
-  file: File;
-}
