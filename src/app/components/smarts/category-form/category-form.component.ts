@@ -22,7 +22,7 @@ export class CategoryFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  edit() {
+  edit(): void {
     const category: Category = {
       name: this.form.controls.name.value,
       image: this.editItem?.image as Image,

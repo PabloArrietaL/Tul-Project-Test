@@ -9,12 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [CategoryComponent, CategoryFormComponent],
   entryComponents: [CategoryFormComponent],
-  imports: [
-    CommonModule,
-    CategoryRoutingModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, CategoryRoutingModule, SharedModule],
 })
 export class CategoryModule {}

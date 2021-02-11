@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Category } from '@Utils/types/category.type';
 import { from } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -41,6 +41,24 @@ export class CategoryService {
 
   public get() {
     return this.firestore.collection('categories').snapshotChanges();
+  }
+
+  public getMapped() {
+    return this.firestore
+      .collection('categories')
+      .snapshotChanges()
+      .pipe(
+        map((value) => {
+          const temp: Category[] = [];
+          value.forEach((item) => {
+            temp.push({
+              ...(item.payload.doc.data() as Category),
+              id: item.payload.doc.id,
+            });
+          });
+          return temp;
+        })
+      );
   }
 
   public update(documentId: string, data: Category) {
