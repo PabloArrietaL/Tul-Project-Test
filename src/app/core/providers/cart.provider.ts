@@ -26,7 +26,19 @@ export class CartProvider {
     this.cartSessionBs.next(products);
   }
 
+  deleteProductCart(cart: ProductDetail): void {
+    const products: ProductDetail[] =
+      JSON.parse(localStorage.getItem('cart') as string) || [];
+    const index = products.indexOf(
+      products.find((x) => x.product.id === cart.product.id) as ProductDetail
+    );
+    products.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(products));
+    this.cartSessionBs.next(products);
+  }
+
   resetSessionBs() {
+    localStorage.removeItem('cart');
     this.cartSessionBs.next([]);
   }
 }

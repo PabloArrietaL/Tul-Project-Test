@@ -39,10 +39,6 @@ export class ProductService {
     );
   }
 
-  public get() {
-    return this.firestore.collection('products').snapshotChanges();
-  }
-
   public getMapped() {
     return this.firestore
       .collection('products')

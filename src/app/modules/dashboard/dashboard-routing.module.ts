@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CheckoutComponent } from '@Smarts/checkout/checkout.component';
 import { ContainerComponent } from '@Smarts/container/container.component';
 import { HomeComponent } from '@Smarts/home/home.component';
 
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
+      },
+      {
+        path: 'checkout',
+        component: CheckoutComponent,
       },
       {
         path: 'category',

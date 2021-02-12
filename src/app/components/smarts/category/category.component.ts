@@ -24,16 +24,7 @@ export class CategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.service.get().subscribe((data) => {
-      const temp: Category[] = [];
-      data.forEach((value) => {
-        temp.push({
-          ...(value.payload.doc.data() as Category),
-          id: value.payload.doc.id,
-        });
-      });
-      this.items = temp;
-    });
+    this.service.getMapped().subscribe((data) => (this.items = data));
   }
 
   onChangePage(pageOfItems: Array<Category>) {

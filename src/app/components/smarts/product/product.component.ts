@@ -24,16 +24,7 @@ export class ProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.service.get().subscribe((data) => {
-      const temp: Product[] = [];
-      data.forEach((value) => {
-        temp.push({
-          ...(value.payload.doc.data() as Product),
-          id: value.payload.doc.id,
-        });
-      });
-      this.items = temp;
-    });
+    this.service.getMapped().subscribe((data) => (this.items = data));
   }
 
   onChangePage(pageOfItems: Array<Product>) {

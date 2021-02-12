@@ -25,12 +25,12 @@
           <td>
             <img [src]="item.image.url" height="50" />
           </td>
-          <td>
+          <td class="d-flex align-items-center justify-content-center h-100">
             <div class="d-flex">
-              <a class="btn btn-danger mr-2" (click)="delete(item)">
+              <a class="reset-anchor mr-2" (click)="delete(item)">
                 <i class="fas fa-trash-alt"></i>
               </a>
-              <a class="btn btn-info" (click)="openEdit(item)">
+              <a class="reset-anchor" (click)="openEdit(item)">
                 <i class="fas fa-edit"></i>
               </a>
             </div>
@@ -39,7 +39,7 @@
         <tr *ngIf="pageOfItems.length === 0">
           <td colspan="4">
             <div
-              class="alert alert-info text-center ml-3 mr-3 mt-3"
+              class="alert alert-category text-center ml-3 mr-3 mt-3"
               role="alert"
             >
               No results found

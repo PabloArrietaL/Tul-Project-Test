@@ -39,10 +39,6 @@ export class CategoryService {
     );
   }
 
-  public get() {
-    return this.firestore.collection('categories').snapshotChanges();
-  }
-
   public getMapped() {
     return this.firestore
       .collection('categories')
