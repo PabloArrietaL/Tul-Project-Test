@@ -4,20 +4,19 @@ import { Router } from '@angular/router';
 import { CartProvider } from '@Core/providers/cart.provider';
 import { Login } from '@Utils/types/user.type';
 import firebase from 'firebase/app';
-import { from } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthenticationService {
   public user!: firebase.User;
+  private subscription!: Subscription;
 
   constructor(
     private afAuth: AngularFireAuth,
     public router: Router,
     private cart: CartProvider
   ) {
-    this.afAuth.authState.subscribe((user) => {
+    this.subscription = this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.user = user;
         localStorage.setItem('user', JSON.stringify(this.user));
@@ -41,6 +40,7 @@ export class AuthenticationService {
 
   public async signOut() {
     await this.afAuth.signOut();
+    if (this.subscription) this.subscription.unsubscribe();
     localStorage.removeItem('user');
     this.cart.resetSessionBs();
     this.router.navigate(['home']);

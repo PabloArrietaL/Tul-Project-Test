@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { CartProvider } from '@Core/providers/cart.provider';
 import { CartStoreService } from '@Redux/service/cart.service';
@@ -12,10 +12,10 @@ import { AuthenticationService } from '@services/authentication.service';
 export class HeaderComponent implements OnInit {
   public quantity: number = 0;
   public isLogged!: boolean;
+  @Output() logout: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private afAuth: AngularFireAuth,
-    private service: AuthenticationService,
     private cart: CartStoreService // private cart: CartProvider
   ) {
     this.afAuth.authState.subscribe((user) => {
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
     // });
   }
 
-  logout() {
-    this.service.signOut();
+  logoutEmit(): void {
+    this.logout.emit(true);
   }
 }

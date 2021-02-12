@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthenticationService } from '@services/authentication.service';
 
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
-  styleUrls: ['./container.component.scss']
+  styleUrls: ['./container.component.scss'],
 })
-export class ContainerComponent implements OnInit {
+export class ContainerComponent {
+  constructor(private service: AuthenticationService) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  logout(logout: boolean) {
+    if (logout) this.service.signOut();
   }
-
 }

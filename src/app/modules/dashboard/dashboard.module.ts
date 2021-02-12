@@ -7,6 +7,7 @@ import { HeaderComponent } from '@Dummies/header/header.component';
 import { FooterComponent } from '@Dummies/footer/footer.component';
 import { ProductCardComponent } from '@Dummies/product-card/product-card.component';
 import { CheckoutComponent } from '@Smarts/checkout/checkout.component';
+import { AuthenticationService } from '@services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -18,5 +19,6 @@ import { CheckoutComponent } from '@Smarts/checkout/checkout.component';
     CheckoutComponent,
   ],
   imports: [CommonModule, DashboardRoutingModule],
+  providers: [AuthenticationService],
 })
 export class DashboardModule {}
