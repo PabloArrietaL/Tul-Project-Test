@@ -23,7 +23,8 @@
       "@Utils/*" : ["app/utils/*"],
       "@services/*" : ["app/services/*"],
       "@env/*": ["environments/*"],
-      "@Core/*": ["app/core/*"]
+      "@Core/*": ["app/core/*"],
+      "@Redux/*": ["app/redux/*"]
     },
     "module": "es2020",
     "lib": [

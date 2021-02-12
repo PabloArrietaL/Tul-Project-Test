@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { CartProvider } from '@Core/providers/cart.provider';
+import { CartStoreService } from '@Redux/service/cart.service';
 import { AuthenticationService } from '@services/authentication.service';
-import { ProductDetail } from '@Utils/types/product.type';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private afAuth: AngularFireAuth,
     private service: AuthenticationService,
-    private cart: CartProvider
+    private cart: CartStoreService // private cart: CartProvider
   ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) this.isLogged = true;
@@ -25,12 +25,20 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cart.cartSession$.subscribe((cart) => {
+    this.cart.getCartItemsList$().subscribe((cart) => {
       this.quantity = 0;
       cart.forEach((item) => {
         this.quantity += item.quantity;
       });
     });
+
+    /** BS RXJS Implementation */
+    // this.cart.cartSession$.subscribe((cart) => {
+    //   this.quantity = 0;
+    //   cart.forEach((item) => {
+    //     this.quantity += item.quantity;
+    //   });
+    // });
   }
 
   logout() {
