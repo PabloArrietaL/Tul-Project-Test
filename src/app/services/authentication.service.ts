@@ -41,8 +41,8 @@ export class AuthenticationService {
 
   public async signOut() {
     await this.afAuth.signOut();
-    localStorage.clear();
+    localStorage.removeItem('user');
     this.cart.resetSessionBs();
-    this.router.navigate(['auth']);
+    this.router.navigate(['home']);
   }
 }
